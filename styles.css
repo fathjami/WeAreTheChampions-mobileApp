@@ -1,0 +1,148 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: 	#301934;
+    /* border: 1px solid white; */
+    color: white;
+}
+
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem 5rem;
+
+}
+
+.img{
+    width: 100%;
+    text-align: center;
+}
+
+img{
+    width: 9rem;
+    height: 9rem;
+}
+
+.header{
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.input-div{
+    width: 30rem;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+#endor-input{
+    width: 100%;
+    height: 10rem;
+    outline: none;
+    display: block;
+    margin: 1rem auto;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #49384a;
+    padding: 1rem;
+    resize: none;
+}
+
+#from-input, #to-input{
+    display: inline;
+    padding: 1rem 2.4rem;
+    border-radius: 0.5rem;
+    background-color: #49384a;
+    border: none;
+    margin-left: 0.1rem; 
+    margin-right: 0.1rem;
+    margin-bottom: 1.5rem; 
+    outline: none;
+}
+
+#publish{
+    display: block;
+    text-align: center;
+    padding: 1rem 2rem;
+    border: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: #301934;
+    font-weight: bold;
+    font-size: 1.2rem;
+    width: 100%;
+}
+
+h2{
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+
+.endorsement{
+    width: 30rem;
+    padding: 1rem;
+    background-color: white;
+    color: black;
+    border-radius: 0.5rem;
+}
+
+.endor-to{
+    display: block;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    background-color: white;
+    color: #301934;
+    font-weight: bold;
+}
+
+.endor-text{
+    width: 100%;
+    height: 9rem;
+    padding: 1rem;
+    font-size: 1.3rem;
+    background-color: white;
+    color: black;
+    margin-bottom: 1.5rem;
+}
+
+.endor-from, .heart, .likes-count{
+    display: inline;
+    background-color: white;
+}
+
+.endor-from{
+    font-size: 1.5rem;
+    background-color: white;
+    color: #301934;
+    font-weight: bold;
+}
+.from-likes{
+   width: 100%;
+   padding: 0.5rem;
+   background-color: white;
+   color: black;
+   position: relative;
+}
+
+
+.likes-count{
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #f49db9;
+    position: absolute;
+    right: 0.1rem;
+    bottom: 0.4rem;
+}
