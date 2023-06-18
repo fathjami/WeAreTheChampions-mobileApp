@@ -2,9 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
     background-color: 	#301934;
     color: white;
-    user-select: none;
 }
 
 html, body{
@@ -76,6 +76,7 @@ img{
     font-weight: bold;
     font-size: 1.2rem;
     width: 100%;
+    margin-bottom: 2rem;
 }
 
 #publish:hover{
