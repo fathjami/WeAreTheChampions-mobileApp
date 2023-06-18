@@ -2,8 +2,6 @@ const endorInput = document.getElementById('endor-input');
 const fromInput = document.getElementById('from-input');
 const toInput = document.getElementById('to-input');
 const publishBtn = document.getElementById('publish');
-const endorConatainer = document.querySelector('.endorsements-container');
-const endorDiv = document.getElementsByClassName('endorsement');
 const endorList = document.querySelector('.endor-list');
 
 //dataBase
@@ -35,6 +33,7 @@ const endor = {
 
 onValue(endorsementsInDb, function(snapshot){
 
+    //get obj as an array from dataBase
     let objArray = Object.values(snapshot.val());
 
     clearList();
@@ -48,20 +47,23 @@ publishBtn.addEventListener('click', function(){
 
     fillEndorsementObject(endorInput.value, fromInput.value ,toInput.value);
 
-    push(endorsementsInDb, endor);
+    if (!isObjEmpty(endor))
+        push(endorsementsInDb, endor);
 
     clearInputs();
 
-    // createAndAppendListItem(endor);
 })
 
 
+function isObjEmpty(obj){
+    return(obj.text === "" || obj.from === "" || obj.to === "");
+}
+
 function fillEndorsementObject(input, from, to){
-    if (input != "" && from != "" && to != ""){
+
         endor.text = input;
         endor.from = from;
         endor.to = to;
-    }
 }
 
 function clearInputs() {
