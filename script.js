@@ -4,6 +4,7 @@ const toInput = document.getElementById('to-input');
 const publishBtn = document.getElementById('publish');
 const endorConatainer = document.querySelector('.endorsements-container');
 const endorDiv = document.getElementsByClassName('endorsement');
+const endorList = document.querySelector('.endor-list');
 
 //dataBase
 
@@ -36,9 +37,10 @@ onValue(endorsementsInDb, function(snapshot){
 
     let objArray = Object.values(snapshot.val());
 
+    clearList();
+
     for(let i = 0; i < objArray.length; i++){
         createAndAppendListItem(objArray[i]);
-        // console.log(objArray[i]);
     }
 })
 
@@ -50,7 +52,7 @@ publishBtn.addEventListener('click', function(){
 
     clearInputs();
 
-    createAndAppendListItem(endor);
+    // createAndAppendListItem(endor);
 })
 
 
@@ -95,5 +97,9 @@ function createAndAppendListItem(obj) {
     li.appendChild(pText);
     li.appendChild(fromLikesDiv);
 
-    endorConatainer.appendChild(li);
+    endorList.appendChild(li);
+}
+
+function clearList(){
+    endorList.innerHTML = "";
 }
