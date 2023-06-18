@@ -73,7 +73,9 @@ function clearInputs() {
     toInput.value = "";
 }
 
-
+function clearList(){
+    endorList.innerHTML = "";
+}
 
 function createAndAppendListItem(item) {
 
@@ -111,21 +113,58 @@ function createAndAppendListItem(item) {
     endorList.appendChild(li);
 }
 
+
 endorList.addEventListener('click', function(e){
     if (e.target.classList.contains('likes-count'))
-    {
+    {  console.log(localStorage.getItem('liked'));
         let id = e.target.id;
-        console.log(e.target);
+        CheckIfLiked(id);
+    }
+})
+
+
+function CheckIfLiked(id ){
+    if (localStorage.getItem(id) === null || localStorage.getItem(id) === 'false')
+    {
+        incrementLikesCount(id);
+        localStorage.setItem(id, true);
+    } else if (localStorage.getItem(id) === 'true')
+    {
+        decrementLikesCount(id);
+        localStorage.setItem(id, false);
+    }
+}
+
+
+function incrementLikesCount(id){
+    let exactLocationOfItemInDB = ref(dataBase, `endorsements/${id}/likesCount`);
+    
+    /* The runTransaction() function in Firebase Realtime Database allows you
+    to perform a transactional update on a specific data location.*/
+    
+    runTransaction(exactLocationOfItemInDB, (likesCount) => {
+        if (likesCount === null) {
+          return 1; // If the property doesn't exist, set it to 1
+        } else {
+            return likesCount + 1; // Increment the existing value by 1
+        }
+      })
+        .then(() => {
+        //   console.log('Likes count incremented successfully!');
+        })
+        .catch((error) => {
+            console.log('Error incrementing likes count: ' + error.message);
+        });
+}
+
+    function decrementLikesCount(id){
         let exactLocationOfItemInDB = ref(dataBase, `endorsements/${id}/likesCount`);
-
-        /* he runTransaction() function in Firebase Realtime Database allows you
-         to perform a transactional update on a specific data location.*/
-
+    
         runTransaction(exactLocationOfItemInDB, (likesCount) => {
             if (likesCount === null) {
-              return 1; // If the property doesn't exist, set it to 1
+              return 0; 
             } else {
-              return likesCount + 1; // Increment the existing value by 1
+              return likesCount - 1; 
             }
           })
             .then(() => {
@@ -135,8 +174,5 @@ endorList.addEventListener('click', function(e){
               console.log('Error incrementing likes count: ' + error.message);
             });
     }
-})
+    
 
-function clearList(){
-    endorList.innerHTML = "";
-}
