@@ -59,12 +59,13 @@ html, body{
     }
     
     #from-input, #to-input{
-        padding: 1rem 0.9rem;
+        padding: 1rem 0.6rem;
         border-radius: 0.5rem;
         background-color: #49384a;
         border: none;
         margin: 0 0.1rem 1.5rem 0.1rem;
         outline: none;
+        font-size: 0.9rem;
     }
     
     #publish{
