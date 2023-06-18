@@ -124,6 +124,8 @@ endorList.addEventListener('click', function(e){
 
 
 function CheckIfLiked(id ){
+
+    //use the id to store if the user liked a specific post in his localstorage
     if (localStorage.getItem(id) === null || localStorage.getItem(id) === 'false')
     {
         incrementLikesCount(id);
@@ -144,9 +146,9 @@ function incrementLikesCount(id){
     
     runTransaction(exactLocationOfItemInDB, (likesCount) => {
         if (likesCount === null) {
-          return 1; // If the property doesn't exist, set it to 1
+          return 1; 
         } else {
-            return likesCount + 1; // Increment the existing value by 1
+            return likesCount + 1; 
         }
       })
         .then(() => {
