@@ -8,7 +8,7 @@ const endorList = document.querySelector('.endor-list');
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 
-import { getDatabase ,ref , push, onValue} from  "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { getDatabase ,ref , push, onValue, runTransaction} from  "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
 const appSettings = {
     databaseURL: "https://we-are-the-champions-c400f-default-rtdb.firebaseio.com/"
@@ -34,11 +34,12 @@ const endor = {
 onValue(endorsementsInDb, function(snapshot){
 
     //get obj as an array from dataBase
-    let objArray = Object.values(snapshot.val());
+    let objArray = Object.entries(snapshot.val());
 
     clearList();
 
     for(let i = 0; i < objArray.length; i++){
+
         createAndAppendListItem(objArray[i]);
     }
 })
@@ -73,7 +74,12 @@ function clearInputs() {
 }
 
 
-function createAndAppendListItem(obj) {
+
+function createAndAppendListItem(item) {
+
+    let obj = item[1];
+    let objId = item[0];
+
     let li = document.createElement('li');
     li.classList.add('endorsement');
     let pTo = document.createElement('p');
@@ -86,6 +92,7 @@ function createAndAppendListItem(obj) {
     fromLikesDiv.classList.add('from-likes');
     let pLikes = document.createElement('p');
     pLikes.classList.add('likes-count');
+    pLikes.id = objId;
 
     pTo.textContent = "To " + obj.to;
     pFrom.textContent = "From " + obj.from;
@@ -99,8 +106,36 @@ function createAndAppendListItem(obj) {
     li.appendChild(pText);
     li.appendChild(fromLikesDiv);
 
+
+
     endorList.appendChild(li);
 }
+
+endorList.addEventListener('click', function(e){
+    if (e.target.classList.contains('likes-count'))
+    {
+        let id = e.target.id;
+        console.log(e.target);
+        let exactLocationOfItemInDB = ref(dataBase, `endorsements/${id}/likesCount`);
+
+        /* he runTransaction() function in Firebase Realtime Database allows you
+         to perform a transactional update on a specific data location.*/
+
+        runTransaction(exactLocationOfItemInDB, (likesCount) => {
+            if (likesCount === null) {
+              return 1; // If the property doesn't exist, set it to 1
+            } else {
+              return likesCount + 1; // Increment the existing value by 1
+            }
+          })
+            .then(() => {
+            //   console.log('Likes count incremented successfully!');
+            })
+            .catch((error) => {
+              console.log('Error incrementing likes count: ' + error.message);
+            });
+    }
+})
 
 function clearList(){
     endorList.innerHTML = "";
