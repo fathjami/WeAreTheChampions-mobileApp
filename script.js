@@ -108,8 +108,6 @@ function createAndAppendListItem(item) {
     li.appendChild(pText);
     li.appendChild(fromLikesDiv);
 
-
-
     endorList.appendChild(li);
 }
 
