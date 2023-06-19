@@ -170,21 +170,20 @@ function incrementLikesCount(id){
         });
 }
 
-    function decrementLikesCount(id){
-        let exactLocationOfItemInDB = ref(dataBase, `endorsements/${id}/likesCount`);
-    
-        runTransaction(exactLocationOfItemInDB, (likesCount) => {
-            if (likesCount === null || likesCount === 0) {
-              return 0; 
-            } else {
-              return likesCount - 1; 
-            }
-          })
-            .then(() => {
-            //   console.log('Likes count incremented successfully!');
-            })
-            .catch((error) => {
-              console.log('Error incrementing likes count: ' + error.message);
-            });
-    }
-    
+function decrementLikesCount(id){
+    let exactLocationOfItemInDB = ref(dataBase, `endorsements/${id}/likesCount`);
+
+    runTransaction(exactLocationOfItemInDB, (likesCount) => {
+        if (likesCount === null || likesCount === 0) {
+        return 0; 
+        } else {
+        return likesCount - 1; 
+        }
+    })
+        .then(() => {
+        //   console.log('Likes count incremented successfully!');
+        })
+        .catch((error) => {
+        console.log('Error incrementing likes count: ' + error.message);
+        });
+}
