@@ -8,7 +8,7 @@ const endorList = document.querySelector('.endor-list');
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 
-import { getDatabase ,ref , push, onValue, runTransaction} from  "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { getDatabase ,ref , push, onValue, runTransaction, set} from  "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
 const appSettings = {
     databaseURL: "https://we-are-the-champions-c400f-default-rtdb.firebaseio.com/"
@@ -30,6 +30,13 @@ const endor = {
     to: "",
     likesCount: 0,
 };
+
+let likes = [];
+let likesArr = JSON.parse(localStorage.getItem("likesArr"));
+
+if (likesArr){
+    likes.push(...likesArr);
+}
 
 onValue(endorsementsInDb, function(snapshot){
 
@@ -96,6 +103,10 @@ function createAndAppendListItem(item) {
     pLikes.classList.add('likes-count');
     pLikes.id = objId;
 
+    if (likes.find(like => like === objId)){
+        pLikes.classList.add('liked');
+    }
+
     pTo.textContent = "To " + obj.to;
     pFrom.textContent = "From " + obj.from;
     pText.textContent = obj.text;
@@ -107,6 +118,8 @@ function createAndAppendListItem(item) {
     li.appendChild(pTo);
     li.appendChild(pText);
     li.appendChild(fromLikesDiv);
+
+
 
     endorList.appendChild(li);
 }
@@ -124,14 +137,14 @@ endorList.addEventListener('click', function(e){
 function CheckIfLiked(id ){
 
     //use the id to store if the user liked a specific post in his localstorage
-    if (localStorage.getItem(id) === null || localStorage.getItem(id) === 'false')
-    {
+    if (likes.find(like => like === id) === undefined){
+        likes.push(id);
+        localStorage.setItem('likesArr', JSON.stringify(likes));
         incrementLikesCount(id);
-        localStorage.setItem(id, true);
-    } else if (localStorage.getItem(id) === 'true')
-    {
+    }else {
+        likes.splice(likes.indexOf(id), 1);
+        localStorage.setItem('likesArr', JSON.stringify(likes));
         decrementLikesCount(id);
-        localStorage.setItem(id, false);
     }
 }
 
@@ -161,7 +174,7 @@ function incrementLikesCount(id){
         let exactLocationOfItemInDB = ref(dataBase, `endorsements/${id}/likesCount`);
     
         runTransaction(exactLocationOfItemInDB, (likesCount) => {
-            if (likesCount === null) {
+            if (likesCount === null || likesCount === 0) {
               return 0; 
             } else {
               return likesCount - 1; 
@@ -175,4 +188,3 @@ function incrementLikesCount(id){
             });
     }
     
-
