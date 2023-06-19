@@ -164,10 +164,11 @@ html, body{
         background-color: rgb(240, 239, 239);
     }    
     
-    .likes-count:active{
+    .likes-count:active, .likes-count.liked{
         color: #e95b88;
-        transform: scale(1);
+        transform: scale(1.1);
     }
+
 }
 
 @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */
@@ -318,8 +319,9 @@ html, body{
     }
     
     
-    .likes-count:active{
+    .likes-count:active, .likes-count.liked{
         color: #e34174;
-        transform: scale(1);
+        transform: scale(1.1);
     }
+
  }
