@@ -45,7 +45,7 @@ onValue(endorsementsInDb, function(snapshot){
 
     clearList();
 
-    for(let i = 0; i < objArray.length; i++){
+    for(let i = objArray.length - 1; i >= 0 ; i--){
 
         createAndAppendListItem(objArray[i]);
     }
